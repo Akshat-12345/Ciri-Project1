@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciri AI Assistant</title>
+</head>
+<body>
+    <h2>Ask Ciri Anything:</h2>
+    <input type="text" id="queryInput" placeholder="Type your question...">
+    <button onclick="askAssistant()">Ask</button>
+    <p id="response"></p>
+
+    <script>
+        function askAssistant() {
+            let userQuery = document.getElementById("queryInput").value;
+
+            fetch("http://127.0.0.1:5000/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: userQuery })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerText = data.response;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
